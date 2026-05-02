@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "494550879477",
+    "project_id": "project-saya-f9d07",
+    "storage_bucket": "project-saya-f9d07.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494550879477:android:aa2b2a64907cc2ae6f09bc",
+        "android_client_info": {
+          "package_name": "com.App"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494550879477-mmqmif5d1fqc6qoj5eshc5cvncubrl2b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.App",
+            "certificate_hash": "9370c925cebbd61445023d96911aebdc5cd27695"
+          }
+        },
+        {
+          "client_id": "494550879477-qi357hnang3abfjnutibcbsd7fr7glu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWR50zxyjMeJ21_GpvK8ZjYCvhjk3xA5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494550879477-qi357hnang3abfjnutibcbsd7fr7glu7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "494550879477-qqej7418d7qnenf0g8g7ckun9poo4cv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uasKatalogsaya"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494550879477:android:c3d42a26061c39dc6f09bc",
+        "android_client_info": {
+          "package_name": "com.example.uas_katalogsaya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494550879477-sch3eqaengc1243dt8uo0m2srqhnoikh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uas_katalogsaya",
+            "certificate_hash": "9370c925cebbd61445023d96911aebdc5cd27695"
+          }
+        },
+        {
+          "client_id": "494550879477-qi357hnang3abfjnutibcbsd7fr7glu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWR50zxyjMeJ21_GpvK8ZjYCvhjk3xA5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494550879477-qi357hnang3abfjnutibcbsd7fr7glu7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "494550879477-qqej7418d7qnenf0g8g7ckun9poo4cv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uasKatalogsaya"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

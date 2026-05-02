@@ -1,0 +1,193 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uas_katalogsaya/core/routes/app_router.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
+import '../widgets/auth_header.dart';
+import '../widgets/custom_button.dart';
+
+class VerifyEmailPage extends StatefulWidget {
+  const VerifyEmailPage({super.key});
+
+  @override
+  State<VerifyEmailPage> createState() => _VerifyEmailPageState();
+}
+
+class _VerifyEmailPageState extends State<VerifyEmailPage> {
+  Timer? _pollingTimer;
+  Timer? _countdownTimer;
+
+  bool _resendCooldown = false;
+  int _countdown = 60;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 600), () {
+      if (mounted) _startPolling();
+    });
+  }
+
+  @override
+  void dispose() {
+    _pollingTimer?.cancel();
+    _countdownTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startPolling() {
+    _pollingTimer?.cancel();
+
+    _pollingTimer = Timer.periodic(const Duration(seconds: 5), (_) async {
+      if (!mounted) return;
+
+      final auth = context.read<AuthProvider>();
+      await auth.firebaseUser?.reload();
+      final success = auth.firebaseUser?.emailVerified ?? false;
+
+      if (!mounted) return;
+
+      if (success == true) {
+        _pollingTimer?.cancel();
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRouter.dashboard,
+          (route) => false,
+        );
+      }
+    });
+  }
+
+  Future<void> _resendEmail() async {
+    if (_resendCooldown) return;
+
+    final auth = context.read<AuthProvider>();
+    final user = auth.firebaseUser;
+    await user?.sendEmailVerification();
+
+    if (!mounted) return;
+
+    setState(() {
+      _resendCooldown = true;
+      _countdown = 60;
+    });
+
+    _countdownTimer?.cancel(); // penting!
+
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (!mounted) {
+        t.cancel();
+        return;
+      }
+
+      if (_countdown <= 1) {
+        t.cancel();
+        setState(() {
+          _resendCooldown = false;
+          _countdown = 60;
+        });
+      } else {
+        setState(() {
+          _countdown--;
+        });
+      }
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Email verifikasi sudah dikirim ulang')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = context.watch<AuthProvider>().firebaseUser;
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const AuthHeader(
+                icon: Icons.mark_email_unread_outlined,
+                title: 'Verifikasi Email Kamu',
+                subtitle:
+                    'Kami sudah mengirim link verifikasi ke email di bawah ini.',
+                iconColor: Colors.orange,
+              ),
+              const SizedBox(height: 24),
+
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Text(
+                  user?.email ?? '-',
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ),
+
+              const SizedBox(height: 32),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.orange),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Menunggu konfirmasi...',
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 32),
+
+              CustomButton(
+                label: _resendCooldown
+                    ? 'Kirim Ulang ($_countdown detik)'
+                    : 'Kirim Ulang Email',
+                variant: ButtonVariant.outlined,
+                onPressed: _resendCooldown ? null : _resendEmail,
+              ),
+
+              const SizedBox(height: 16),
+
+              CustomButton(
+                label: 'Ganti Akun / Logout',
+                variant: ButtonVariant.text,
+                onPressed: () {
+                  _pollingTimer?.cancel();
+                  _countdownTimer?.cancel();
+
+                  context.read<AuthProvider>().logout();
+
+                  Navigator.pushReplacementNamed(
+                    context,
+                    AppRouter.login,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
