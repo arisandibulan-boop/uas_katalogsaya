@@ -81,3 +81,4 @@ class CartModel {
     return CartModel(items: items, total: total, itemCount: itemCount);
   }
 }
+// Cart Model
