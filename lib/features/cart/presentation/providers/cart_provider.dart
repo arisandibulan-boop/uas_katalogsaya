@@ -140,4 +140,4 @@ class CartProvider extends ChangeNotifier {
   Future<void> removeFromCart(int id) async {
     await removeItem(id);
   }
-}
+}// Update Cart
