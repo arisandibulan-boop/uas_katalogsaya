@@ -141,3 +141,4 @@ class CartProvider extends ChangeNotifier {
     await removeItem(id);
   }
 }// Update Cart
+// Remove Cart
