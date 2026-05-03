@@ -82,3 +82,4 @@ class MyApp extends StatelessWidget {
 //c38
 //c39
 //c40
+// init core
