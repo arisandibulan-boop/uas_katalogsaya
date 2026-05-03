@@ -84,3 +84,4 @@ class MyApp extends StatelessWidget {
 //c40
 // init core
 // firebase setup
+// provider setup
