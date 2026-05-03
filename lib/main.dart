@@ -87,3 +87,4 @@ class MyApp extends StatelessWidget {
 // provider setup
 // routing setup
 // error handling
+// dio config
