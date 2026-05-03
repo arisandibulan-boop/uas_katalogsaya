@@ -86,3 +86,4 @@ class MyApp extends StatelessWidget {
 // firebase setup
 // provider setup
 // routing setup
+// error handling
