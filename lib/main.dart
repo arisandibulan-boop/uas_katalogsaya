@@ -89,3 +89,4 @@ class MyApp extends StatelessWidget {
 // error handling
 // dio config
 // orientation
+// statusbar
