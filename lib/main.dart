@@ -88,3 +88,4 @@ class MyApp extends StatelessWidget {
 // routing setup
 // error handling
 // dio config
+// orientation
